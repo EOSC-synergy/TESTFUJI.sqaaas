@@ -1,17 +1,17 @@
 config:
-  credentials:
-      - id: userpass_sqaaas_web
-        username_var: GIT_USER
-        password_var: GIT_PASSWORD
-
+  credentials: []
+  project_repos:
+    github.com/EOSC-synergy/sqaaas-tooling:
+      branch: release/1.7.0
+      repo: https://github.com/EOSC-synergy/sqaaas-tooling
+environment:
+  JPL_DOCKERFORCEBUILD: enabled
 sqa_criteria:
-  qc_doc:
+  QC.FAIR:
     repos:
-      sqaaas-web:
-        container: node
+      this_repo:
         commands:
-          - > 
-            env GIT_ASKPASS=/sqaaas-web/.git_credential_helper.sh
-            npm --prefix /sqaaas-web run deploy --
-            --user="Diana M. Naranjo <dnaranjo@i3m.upv.es>"
-            --repo=https://${GIT_USER}@github.com/eosc-synergy/sqaaas-web
+        - fuji.py -OID http://hdl.handle.net/10261/157765 --tool_endpoint http://localhost:1071/fuji/api/v1/evaluate
+          -T oai_pmh -E http://digital.csic.es/dspace-oai/request
+        container: qc.fair_messy-lilac-dog
+timeout: 600
